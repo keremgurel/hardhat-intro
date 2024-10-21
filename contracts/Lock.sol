@@ -5,11 +5,22 @@ pragma solidity ^0.8.27;
 // import "hardhat/console.sol";
 
 contract Lock {
+    // state variables. These are values stored directly 
+    // in contract storage. They represent the state or data of a 
+    // contract that persists between function calls.
     uint public unlockTime;
     address payable public owner;
 
+    // event that is emitted when a withdrawal is made. Events allow 
+    // logging to the Ethereum blockchain. They are useful for notifying 
+    // external applications about changes to the contract.
     event Withdrawal(uint amount, uint when);
 
+
+    // The constructor runs only once when the contract is deployed. It:
+    // - Initializes state variables
+    // - Can receive parameters for initial setup
+    // - Can be payable to receive Ether during deployment
     constructor(uint _unlockTime) payable {
         require(
             block.timestamp < _unlockTime,
@@ -20,6 +31,8 @@ contract Lock {
         owner = payable(msg.sender);
     }
 
+    // Functions are executable units of code within a contract. They can 
+    // read or modify the contract's state.
     function withdraw() public {
         // Uncomment this line, and the import of "hardhat/console.sol", to print a log in your terminal
         // console.log("Unlock time is %o and block timestamp is %o", unlockTime, block.timestamp);
